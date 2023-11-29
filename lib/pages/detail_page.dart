@@ -4,6 +4,8 @@ import 'package:travel_app/widgets/app_large_text.dart';
 import 'package:travel_app/widgets/app_text.dart';
 import 'package:travel_app/widgets/responsive_button.dart';
 
+import '../misc/colors.dart';
+
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
 
@@ -17,7 +19,7 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: double.maxFinite,
         height: double.maxFinite,
         child: Stack(
@@ -26,7 +28,7 @@ class _DetailPageState extends State<DetailPage> {
                 left: 0,
                 child: Container(
                   width: 350,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("img/pic1.jpeg"), fit: BoxFit.cover),
                   ),
@@ -37,7 +39,7 @@ class _DetailPageState extends State<DetailPage> {
               child: Row(children: [
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.menu),
+                  icon: const Icon(Icons.menu),
                 ),
               ]),
             ),
@@ -51,7 +53,7 @@ class _DetailPageState extends State<DetailPage> {
                 ),
                 width: MediaQuery.of(context).size.width,
                 height: 500,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
@@ -66,10 +68,10 @@ class _DetailPageState extends State<DetailPage> {
                             color: Colors.black.withOpacity(0)),
                         AppLargeText(
                             text: "\$ 250",
-                            color: AppColors.textColor1.mainColor)
+                            color: AppColors.textColor1)
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -78,7 +80,7 @@ class _DetailPageState extends State<DetailPage> {
                           Icons.location_on,
                           color: AppColors.mainColor,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         AppText(
@@ -87,7 +89,7 @@ class _DetailPageState extends State<DetailPage> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(
@@ -100,27 +102,27 @@ class _DetailPageState extends State<DetailPage> {
                                     : AppColors.textColor2);
                           }),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         AppText(text: "(4.0)", color: AppColors.textColor2)
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
                     AppLargeText(
                         text: "People",
                         color: Colors.black.withOpacity(0.8),
                         size: 20),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     AppText(
                       text: "Number of people in your group",
                       color: AppColors.mainTextColor,
                     ),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
                     Wrap(
                       children: List.generate(5, (index) {
                         return InkWell(
@@ -140,9 +142,9 @@ class _DetailPageState extends State<DetailPage> {
                         );
                       }),
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     AppLargeText(text: "Description", color:Colors.black.withOpacity(0.8),size: 20,),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
                     AppText(text: "bablababalbalbablablbalbalbabalbalalbalbabbalablablabalbalbalbalb",color: AppColors.mainTextColor,),
                   ],
                 ),
@@ -161,7 +163,7 @@ class _DetailPageState extends State<DetailPage> {
                     isIcon: true,
                     icon: Icons.favorite_border,
                   ),
-                  SizedBox(width: 20,),
+                  const SizedBox(width: 20,),
                   ResponsiveButtton(
                     isResponsive: true,
                   )
