@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_app/cubit/app_cubit_states.dart';
 import 'package:travel_app/cubit/app_cubits.dart';
+import 'package:travel_app/pages/detail_page/cubit/store_page_info_cubits.dart';
 import 'package:travel_app/widgets/app_button.dart';
 import 'package:travel_app/widgets/app_large_text.dart';
 import 'package:travel_app/widgets/app_text.dart';
@@ -22,7 +23,16 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state){
+
+
       DetailState detail = state as DetailState;
+      var list= BlocProvider.of<StorePageInfoCubits>(context).state;
+      for(int i=0; i<list.length;i++){
+        if(list[i].name==detail.place.name){
+          selectedIndex= list[i].index!;
+        }
+      }
+
       return Scaffold( 
       body: SizedBox(
         width: double.maxFinite,
@@ -134,7 +144,24 @@ class _DetailPageState extends State<DetailPage> {
                       children: List.generate(5, (index) {
                         return InkWell(
                           onTap: (){
-                            selectedIndex=index;
+                            var data= state.place;
+                            var list= BlocProvider.of<StorePageInfoCubits>(context).state;
+                            for(int i=0; i<list.length; i++){
+                              if(list[i].name==data.name)
+
+                              if(list[i].index==index){
+                                print('we found a match with index ${selectedIndex}');
+                              }else{
+                                BlocProvider.of<StorePageInfoCubits>(context).updatePageInfo(detail.place.name, index);
+                              }
+                            }
+                            if(selectedIndex == -1){
+                              print('inside a condition');
+                              BlocProvider.of<StorePageInfoCubits>(context).addPageInfo(detail.place.name, index);
+                            }
+                            setState(() {
+                              selectedIndex=index;
+                            });
                           },
                           child: Container(
                             margin: const EdgeInsets.only(right: 10),
