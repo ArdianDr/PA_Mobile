@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_app/cubit/app_cubit_states.dart';
+import 'package:travel_app/cubit/app_cubits.dart';
 import 'package:travel_app/widgets/app_button.dart';
 import 'package:travel_app/widgets/app_large_text.dart';
 import 'package:travel_app/widgets/app_text.dart';
@@ -18,7 +21,9 @@ class _DetailPageState extends State<DetailPage> {
   int selectedIndex=-1;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocBuilder<AppCubits, CubitStates>(builder: (context, state){
+      DetailState detail = state as DetailState;
+      return Scaffold( 
       body: SizedBox(
         width: double.maxFinite,
         height: double.maxFinite,
@@ -28,9 +33,9 @@ class _DetailPageState extends State<DetailPage> {
                 left: 0,
                 child: Container(
                   width: 350,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("img/pic1.jpeg"), fit: BoxFit.cover),
+                        image: NetworkImage("http://mark.bslmeiyu.com/uploads/"+detail.place.img), fit: BoxFit.cover),
                   ),
                 )),
             Positioned(
@@ -38,7 +43,9 @@ class _DetailPageState extends State<DetailPage> {
               top: 50,
               child: Row(children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    BlocProvider.of<AppCubits>(context).goHome();
+                  },
                   icon: const Icon(Icons.menu),
                 ),
               ]),
@@ -64,10 +71,10 @@ class _DetailPageState extends State<DetailPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         AppLargeText(
-                            text: "Yosemite",
+                            text: detail.place.name,
                             color: Colors.black.withOpacity(0)),
                         AppLargeText(
-                            text: "\$ 250",
+                            text: "\$"+detail.place.price.toString(),
                             color: AppColors.textColor1)
                       ],
                     ),
@@ -84,7 +91,7 @@ class _DetailPageState extends State<DetailPage> {
                           width: 5,
                         ),
                         AppText(
-                          text: "USA, California",
+                          text: detail.place.location,
                           color: AppColors.textColor1,
                         )
                       ],
@@ -97,7 +104,7 @@ class _DetailPageState extends State<DetailPage> {
                         Wrap(
                           children: List.generate(5, (index) {
                             return Icon(Icons.star,
-                                color: index < gottenStars
+                                color: index < detail.place.stars
                                     ? AppColors.starColor
                                     : AppColors.textColor2);
                           }),
@@ -105,7 +112,7 @@ class _DetailPageState extends State<DetailPage> {
                         const SizedBox(
                           width: 10,
                         ),
-                        AppText(text: "(4.0)", color: AppColors.textColor2)
+                        AppText(text: "(5.0)", color: AppColors.textColor2)
                       ],
                     ),
                     const SizedBox(
@@ -145,7 +152,7 @@ class _DetailPageState extends State<DetailPage> {
                     const SizedBox(height: 20,),
                     AppLargeText(text: "Description", color:Colors.black.withOpacity(0.8),size: 20,),
                     const SizedBox(height: 10,),
-                    AppText(text: "bablababalbalbablablbalbalbabalbalalbalbabbalablablabalbalbalbalb",color: AppColors.mainTextColor,),
+                    AppText(text: detail.place.description,color: AppColors.mainTextColor,),
                   ],
                 ),
               ),
@@ -175,5 +182,7 @@ class _DetailPageState extends State<DetailPage> {
         ),
       ),
     );
-  }
+  
+    });
+    }
 }
