@@ -1,6 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, must_be_immutable, library_private_types_in_public_api
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -105,7 +104,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               color: Colors.white,
                               image: DecorationImage(
                                   image: NetworkImage(
-                                      "http://mark.bslmeiyu.com/uploads/" +info[index].img),
+                                      "http://mark.bslmeiyu.com/uploads/${info[index].img}"),
                                   fit: BoxFit.cover)),
                         ),
                       );

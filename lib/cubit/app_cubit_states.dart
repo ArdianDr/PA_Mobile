@@ -21,7 +21,6 @@ class LoadingState extends CubitStates{
   @override
   //TODO: implement props
   List<Object> get props =>[];
-  
  }
 
 class LoadedState extends CubitStates{
@@ -39,5 +38,16 @@ class LoadedState extends CubitStates{
   @override
   //TODO: implement props
   List<Object> get props =>[place];
-  
+ }
+
+ class LogOut extends CubitStates{
+  @override
+  //TODO: implement props
+  List<Object> get props =>[];
+ }
+
+  class LoggedIn extends CubitStates{
+  @override
+  //TODO: implement props
+  List<Object> get props =>[];
  }

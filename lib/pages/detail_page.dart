@@ -6,8 +6,6 @@ import 'package:travel_app/pages/detail_page/cubit/store_page_info_cubits.dart';
 import 'package:travel_app/widgets/app_button.dart';
 import 'package:travel_app/widgets/app_large_text.dart';
 import 'package:travel_app/widgets/app_text.dart';
-import 'package:travel_app/widgets/responsive_button.dart';
-
 import '../misc/colors.dart';
 
 class DetailPage extends StatefulWidget {
@@ -47,8 +45,7 @@ class _DetailPageState extends State<DetailPage> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                           image: NetworkImage(
-                              "http://mark.bslmeiyu.com/uploads/" +
-                                  detail.place.img),
+                              "http://mark.bslmeiyu.com/uploads/${detail.place.img}"),
                           fit: BoxFit.cover),
                     ),
                   )),
@@ -88,7 +85,7 @@ class _DetailPageState extends State<DetailPage> {
                               text: detail.place.name,
                               color: Colors.black.withOpacity(0)),
                           AppLargeText(
-                              text: "\$" + detail.place.price.toString(),
+                              text: "\$${detail.place.price}",
                               color: AppColors.textColor1)
                         ],
                       ),
