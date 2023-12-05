@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_app/pages/navpages/bar_item_page.dart';
 import 'package:travel_app/pages/home_page.dart';
 import 'package:travel_app/pages/navpages/my_page.dart';
 import 'package:travel_app/pages/navpages/search_page.dart';
+import 'package:travel_app/provider/settings_screen.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -29,17 +31,23 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: pages[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         unselectedFontSize: 0,
         selectedFontSize: 0,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: context.watch<ThemeModeData>().isDarkModeActive
+                  ? Colors.white
+                  : Colors.blueAccent,
         onTap: onTap,
         currentIndex: currentIndex,
-        selectedItemColor: const Color.fromARGB(255, 79, 4, 255),
-        unselectedItemColor: const Color.fromARGB(255, 2, 24, 36).withOpacity(0.5),
+        selectedItemColor: context.watch<ThemeModeData>().isDarkModeActive
+                  ? Colors.blueAccent
+                  : Colors.grey,
+        unselectedItemColor: context.watch<ThemeModeData>().isDarkModeActive
+                  ? Colors.black
+                  : Colors.white,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         elevation: 0,

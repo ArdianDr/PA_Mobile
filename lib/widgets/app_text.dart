@@ -1,14 +1,16 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: must_be_immutable
 
+import 'package:flutter/material.dart';
+@immutable
 class AppText extends StatelessWidget {
   double size ;
   final String text;
-  final Color color;
+  // final Color color;
  
  AppText({Key? key,
  this.size = 16,
  required this.text,
- this.color = Colors.black54
+//  this.color = Colors.black54
  }) : super(key: key);
 
   @override
@@ -16,7 +18,7 @@ class AppText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        color: color,
+        // color: color,
         fontSize: size,
         fontWeight: FontWeight.bold
       ),
