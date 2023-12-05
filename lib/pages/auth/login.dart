@@ -1,6 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, prefer_final_fields, file_names
-
-import 'package:fluttertoast/fluttertoast.dart';
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, prefer_final_fields, file_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:travel_app/pages/auth/register.dart';
 
@@ -33,21 +31,18 @@ class _LoginState extends State<Login> {
       // Attempt to login user
       await Auth().login(email, password);
 
-      // If login is successful, show success toast
-      Fluttertoast.showToast(
-        msg: "Login successful!",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-    } catch (e) {
-      // If login fails, show error snackbar
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Failed to login. ${e.toString()}"),
+          content: Text("Login successful!"),
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.blue,
+        ),
+      );
+      Navigator.pushNamed(context, '/home');
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Failed to login!"),
           duration: Duration(seconds: 2),
           backgroundColor: Colors.red,
         ),

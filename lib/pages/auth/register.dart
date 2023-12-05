@@ -1,8 +1,7 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, prefer_final_fields, file_names
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, prefer_final_fields, file_names, use_build_context_synchronously
 
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../firebase/auth.dart';
-import 'Login.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -14,45 +13,42 @@ class Register extends StatefulWidget {
 
 class _RegisState extends State<Register> {
   bool _loading = false;
-
   final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _ctrlEmail = TextEditingController();
-
   final TextEditingController _ctrlPassword = TextEditingController();
+  final TextEditingController _ctrlName = TextEditingController();
 
   Future<void> handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
 
     final email = _ctrlEmail.value.text;
     final password = _ctrlPassword.value.text;
+    final name = _ctrlName.value.text;
 
     setState(() => _loading = true);
 
     try {
-      // Attempt to register user
       await Auth().regis(email, password);
+      await FirebaseFirestore.instance.collection('users').add({
+        'email': email,
+        'name': name,
+        'acc_created': FieldValue.serverTimestamp(),
+      });
 
-      // If registration is successful, show success toast
-      Fluttertoast.showToast(
-        msg: "Account created successfully!",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Account Created Successfully!"),
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.blue,
+        ),
       );
     } catch (e) {
-      // If registration fails, show error toast
-      Fluttertoast.showToast(
-        msg: "Failed to create account. ${e.toString()}",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Register Failed!"),
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.red,
+        ),
       );
     } finally {
       setState(() => _loading = false);
@@ -78,6 +74,20 @@ class _RegisState extends State<Register> {
                   ),
                 ),
                 TextFormField(
+                  controller: _ctrlName,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Silakan Masukkan Nama Anda';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Nama',
+                  ),
+                ),
+                SizedBox(height: 10),
+                TextFormField(
                   controller: _ctrlEmail,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -97,6 +107,9 @@ class _RegisState extends State<Register> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Silakan Masukkan Password Anda';
+                    }
+                    if (value.length < 8) {
+                      return 'Password Terlalu Pendek (Minimal 8 Karakter)';
                     }
                     return null;
                   },
@@ -124,27 +137,28 @@ class _RegisState extends State<Register> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            Login(),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(1.0, 0.0);
-                          const end = Offset.zero;
-                          const curve = Curves.easeInOut;
-                          var tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          var offsetAnimation = animation.drive(tween);
+                    // Navigator.push(
+                    //   context,
+                    //   PageRouteBuilder(
+                    //     pageBuilder: (context, animation, secondaryAnimation) =>
+                    //         Login(),
+                    //     transitionsBuilder:
+                    //         (context, animation, secondaryAnimation, child) {
+                    //       const begin = Offset(1.0, 0.0);
+                    //       const end = Offset.zero;
+                    //       const curve = Curves.easeInOut;
+                    //       var tween = Tween(begin: begin, end: end)
+                    //           .chain(CurveTween(curve: curve));
+                    //       var offsetAnimation = animation.drive(tween);
 
-                          return SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          );
-                        },
-                      ),
-                    );
+                    //       return SlideTransition(
+                    //         position: offsetAnimation,
+                    //         child: child,
+                    //       );
+                    //     },
+                    //   ),
+                    // );
+                    Navigator.pop(context);
                   },
                   child: Text("Sudah Punya Akun? Klik Disini Untuk Login"),
                 )
