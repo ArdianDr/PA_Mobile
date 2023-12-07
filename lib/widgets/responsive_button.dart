@@ -1,18 +1,19 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:travel_app/widgets/app_text.dart';
 
 class ResponsiveButton extends StatelessWidget {
   bool? isResponsive;
   double? width;
   final VoidCallback onTapCallback;
+  String textinput;
 
   ResponsiveButton({
     Key? key,
     this.width = 120,
     this.isResponsive = false,
     required this.onTapCallback,
+    required this.textinput
   }) : super(key: key);
 
   @override
@@ -34,8 +35,13 @@ class ResponsiveButton extends StatelessWidget {
             isResponsive == true
                 ? Container(
                     margin: const EdgeInsets.only(left: 20),
-                    child: AppText(
-                      text: "Book Trip Now",
+                    child: Text(
+                      textinput,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold
+                      ),
                     ),
                   )
                 : Container(),
