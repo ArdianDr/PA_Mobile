@@ -74,6 +74,7 @@ class _WelcomePageState extends State<WelcomePage> {
                               children: [
                                 ResponsiveButton(
                                   width: 120,
+                                  textinput: "Login",
                                   onTapCallback: () {
                                     Navigator.pushNamed(context, '/login');
                                   },

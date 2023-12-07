@@ -3,11 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app/firebase/firebase_options.dart';
-import 'package:travel_app/pages/auth/login.dart';
-import 'package:travel_app/pages/detail_page.dart';
+import 'package:travel_app/pages/auth/loginPage.dart';
 import 'package:travel_app/pages/navpages/main_page.dart';
 import 'package:travel_app/pages/welcome_pages.dart';
-import 'package:travel_app/provider/detail_page_prod.dart';
+import 'package:travel_app/provider/home_page_prod.dart';
 import 'package:travel_app/provider/settings_screen.dart';
 
 void main() async {
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
             create: (context) => ThemeModeData(),
           ),
           ChangeNotifierProvider(
-            create: (context) => DetailPageProvider(),
+            create: (context) => HomePageProvider(),
           ),
         ],
         child: Builder(builder: (ctx) {
@@ -40,6 +39,20 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
                 useMaterial3: true,
                 brightness: Brightness.light,
+                // inputDecorationTheme: const InputDecorationTheme(
+                //   focusedBorder: OutlineInputBorder(
+                //     borderSide: BorderSide(
+                //       color: Colors.blue,
+                //       width: 2.0, 
+                //     ),
+                //   ),
+                //   enabledBorder: OutlineInputBorder(
+                //     borderSide: BorderSide(
+                //       color: Colors.grey, 
+                //       width: 1.0, 
+                //     ),
+                //   ),
+                // ),
                 textTheme: const TextTheme(
                   headlineLarge: TextStyle(
                       fontSize: 38,
@@ -52,6 +65,20 @@ class MyApp extends StatelessWidget {
             darkTheme: ThemeData(
                 useMaterial3: true,
                 brightness: Brightness.dark,
+                // inputDecorationTheme: const InputDecorationTheme(
+                //   focusedBorder: OutlineInputBorder(
+                //     borderSide: BorderSide(
+                //       color: Colors.white,
+                //       width: 2.0, 
+                //     ),
+                //   ),
+                //   enabledBorder: OutlineInputBorder(
+                //     borderSide: BorderSide(
+                //       color: Colors.grey, 
+                //       width: 1.0, 
+                //     ),
+                //   ),
+                // ),
                 textTheme: const TextTheme(
                   headlineLarge: TextStyle(
                       fontSize: 38,
@@ -79,12 +106,11 @@ class MyApp extends StatelessWidget {
             ),
             routes: {
               '/home': (context) => const MainPage(),
-              '/detail': (context) => const DetailPage(
-                    data: {},
-                  ),
+              // '/detail': (context) => const DetailPage(data: {}),
+              // '/booking': (context) => const BookingPage(data: {}),
               '/welcome': (context) => const WelcomePage(),
               '/introduction': (context) => const WelcomePage(),
-              '/login': (context) => const Login(),
+              '/login': (context) => const LoginPage(),
               '/setting': (context) => const SettingsScreen(),
             },
             // initialRoute: '/introduction',
